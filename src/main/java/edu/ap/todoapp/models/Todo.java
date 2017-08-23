@@ -10,8 +10,9 @@ import javax.persistence.*;
 public class Todo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Basic
     @Column(name = "beschrijving")
@@ -21,11 +22,21 @@ public class Todo {
     @Column(name = "status")
     private boolean status;
 
-    public int getId() {
+    //indien je zelf een constructor aanmaakt ook steeds een lege constructor voorzien.
+    public Todo(String beschrijving, boolean status) {
+        this.beschrijving = beschrijving;
+        this.status = status;
+    }
+
+
+    public Todo() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

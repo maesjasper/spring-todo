@@ -29,7 +29,7 @@ public class UI extends javax.swing.JFrame {
     TodoRepository todoRepository;
     private List<Todo> todos;
 
-//    private Todo todoBeingEdited;
+    private Todo todoBeingEdited;
     @Autowired
     public UI(TodoRepository todoRepository) {
 
@@ -38,34 +38,20 @@ public class UI extends javax.swing.JFrame {
         initComponents();
         this.showTable();
 
-/*        btnAddTodoItem.addActionListener(
+        btnAddTodoItem.addActionListener(
 
                 e -> {
                     if (this.todoBeingEdited == null){
+
                         Todo todo = new Todo(txtBeschrijving.getText(), chkStatus.isSelected());
-                        try {
-                            Controller.getInstance().insertTodo(todo);
-                        } catch (SQLException ex) {
-                            this.showSQLExceptionMsgBox();
-                        } catch (IOException ex) {
-                            this.showIOExceptionMsgBox();
-                        } catch (ClassNotFoundException ex) {
-                            this.showClassNotFoundMsgBox();
-                        }
+                        todoRepository.save(todo);
                         this.showTable();
                     }
                     else {
                         todoBeingEdited.setBeschrijving(txtBeschrijving.getText());
                         todoBeingEdited.setStatus(chkStatus.isSelected());
-                        try {
-                            Controller.getInstance().updateTodo(this.todoBeingEdited);
-                        } catch (SQLException ex) {
-                            this.showSQLExceptionMsgBox();
-                        } catch (IOException ex) {
-                            this.showIOExceptionMsgBox();
-                        } catch (ClassNotFoundException ex) {
-                            this.showClassNotFoundMsgBox();
-                        }
+                        todoRepository.save(todoBeingEdited);
+
                         this.showTable();
                     }
 
@@ -88,18 +74,10 @@ public class UI extends javax.swing.JFrame {
         btnDeleteTodoItem.addActionListener(
                 e -> {
                     Todo todo = (Todo)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0);
-                    try {
-                        Controller.getInstance().deleteTodo(todo);
-                    } catch (SQLException ex) {
-                        this.showSQLExceptionMsgBox();
-                    } catch (IOException ex) {
-                        this.showIOExceptionMsgBox();
-                    } catch (ClassNotFoundException ex) {
-                        this.showClassNotFoundMsgBox();
-                    }
+                    todoRepository.delete(todo);
                     this.showTable();
                 }
-        );*/
+        );
     }
 
     private void showTable() {
