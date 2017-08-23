@@ -1,5 +1,6 @@
 package edu.ap.todoapp;
 
+import edu.ap.todoapp.repos.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,9 +17,10 @@ public class TodoappApplication {
     }
 
     @Bean
-    CommandLineRunner doOnStart(@Autowired UI ui) {
+    CommandLineRunner doOnStart(@Autowired UI ui, @Autowired TodoRepository todoRepository) {
         return evt -> {
-            ui.setVisible(true);
+            todoRepository.findAll().forEach(todo -> System.out.println(todo.getBeschrijving() + " " +  todo.getId()));
+            //ui.setVisible(true);
         };
     }
 }
