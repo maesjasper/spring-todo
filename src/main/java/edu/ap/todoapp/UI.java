@@ -8,6 +8,9 @@ package edu.ap.todoapp;
 //import be.ap.todolist.BLL.Controller;
 //import be.ap.todolist.BLL.Todo;
 
+import edu.ap.todoapp.models.Todo;
+import edu.ap.todoapp.repos.TodoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
@@ -23,12 +26,17 @@ import java.util.List;
 @Service
 public class UI extends javax.swing.JFrame {
 
-//    private List<Todo> todos;
-//    private Todo todoBeingEdited;
+    TodoRepository todoRepository;
+    private List<Todo> todos;
 
-    public UI() {
+//    private Todo todoBeingEdited;
+    @Autowired
+    public UI(TodoRepository todoRepository) {
+
+        this.todoRepository = todoRepository;
+
         initComponents();
-        //this.showTable();
+        this.showTable();
 
 /*        btnAddTodoItem.addActionListener(
 
@@ -93,21 +101,15 @@ public class UI extends javax.swing.JFrame {
                 }
         );*/
     }
-/*
+
     private void showTable() {
-        try {
-            todos = Controller.getTodos();
-        } catch (IOException e) {
-            this.showIOExceptionMsgBox();
-        } catch (SQLException e) {
-            this.showSQLExceptionMsgBox();
-        } catch (ClassNotFoundException e) {
-            this.showClassNotFoundMsgBox();
-        }
+
+        todos = todoRepository.findAll();
+
         jTable1.setModel(new DefaultTableModel(getRows(), getCols()));
         jTable1.removeColumn(jTable1.getColumnModel().getColumn(0));
     }
-*/
+
     private void showErrorDialog(String message) {
         this.showErrorDialog(message, "Error");
     }
@@ -130,7 +132,7 @@ public class UI extends javax.swing.JFrame {
     private void showClassNotFoundMsgBox() {
         this.showErrorDialog("class not found error");
     }
-/*
+
     private Object[] getCols() {
         Object[] columns = {"object", "Beschrijving", "Status"};
         return columns;
@@ -150,7 +152,7 @@ public class UI extends javax.swing.JFrame {
         }
         return data;
     }
-*/
+
     private void initComponents() {
 
         btnNewTodoItem = new javax.swing.JButton();

@@ -20,7 +20,7 @@ public class TodoappApplication {
     CommandLineRunner doOnStart(@Autowired UI ui, @Autowired TodoRepository todoRepository) {
         return evt -> {
             todoRepository.findAll().forEach(todo -> System.out.println(todo.getBeschrijving() + " " +  todo.getId()));
-            //ui.setVisible(true);
+            ui.setVisible(true);
         };
     }
 }
